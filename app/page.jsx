@@ -7,6 +7,21 @@ export default function Home() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [priority, setPriority] = useState('MEDIUM');
   const [isLoading, setIsLoading] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      setIsDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
     fetchTasks();
@@ -90,6 +105,9 @@ export default function Home() {
             <p className="subtitle">Simplify your day</p>
           </div>
         </div>
+        <button className="theme-toggle" onClick={() => setIsDarkMode(!isDarkMode)}>
+          {isDarkMode ? '☀️ Light' : '🌙 Dark'}
+        </button>
       </header>
 
       {/* Mobile Header */}
@@ -98,7 +116,9 @@ export default function Home() {
           <span style={{color: 'var(--primary)', fontSize: '20px'}}>≚</span> Ash Todo
         </div>
         <div className="mobile-actions">
-          <span style={{cursor: 'pointer'}}>🔍</span>
+          <span style={{cursor: 'pointer'}} onClick={() => setIsDarkMode(!isDarkMode)}>
+            {isDarkMode ? '☀️' : '🌙'}
+          </span>
           <span style={{cursor: 'pointer', marginLeft: '12px'}}>⋮</span>
         </div>
       </div>
