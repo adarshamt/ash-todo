@@ -31,9 +31,11 @@ export default function Home() {
     try {
       const res = await fetch('/api/tasks');
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to fetch tasks');
       setTasks(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching tasks', error);
+      setTasks([]);
     } finally {
       setIsLoading(false);
     }
@@ -49,12 +51,15 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: newTaskTitle, priority }),
       });
-      const newTask = await res.json();
-      setTasks([newTask, ...tasks]);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to add task');
+      
+      setTasks([data, ...tasks]);
       setNewTaskTitle('');
       setPriority('MEDIUM');
     } catch (error) {
       console.error('Error adding task', error);
+      alert(error.message);
     }
   };
 

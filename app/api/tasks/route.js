@@ -10,7 +10,8 @@ export async function GET() {
     });
     return NextResponse.json(tasks);
   } catch (error) {
-    return NextResponse.json({ error: 'Error fetching tasks' }, { status: 500 });
+    console.error("GET Error:", error);
+    return NextResponse.json({ error: error.message || 'Error fetching tasks' }, { status: 500 });
   }
 }
 
@@ -22,6 +23,7 @@ export async function POST(request) {
     });
     return NextResponse.json(task);
   } catch (error) {
-    return NextResponse.json({ error: 'Error creating task' }, { status: 500 });
+    console.error("POST Error:", error);
+    return NextResponse.json({ error: error.message || 'Error creating task' }, { status: 500 });
   }
 }
