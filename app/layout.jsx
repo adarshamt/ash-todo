@@ -1,5 +1,6 @@
 import './globals.css'
 import ServiceWorkerRegister from './components/ServiceWorkerRegister'
+import InstallButton from './components/InstallButton'
 
 export const metadata = {
   title: 'Ash Todo',
@@ -22,9 +23,9 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="theme-color" content="#000000" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/ash-todo-logo.png" />
-        <link rel="icon" href="/ash-todo-logo.png" sizes="192x192" />
-        <link rel="icon" href="/ash-todo-logo.png" sizes="512x512" />
+        <link rel="apple-touch-icon" href="/icons/icon-512.png" />
+        <link rel="icon" href="/icons/icon-192.png" sizes="192x192" />
+        <link rel="icon" href="/icons/icon-512.png" sizes="512x512" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
         {children}
         {/* Client component will register the service worker when available */}
         <ServiceWorkerRegister />
+        <InstallButton />
       </body>
     </html>
   )
