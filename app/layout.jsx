@@ -1,4 +1,5 @@
 import './globals.css'
+import 'leaflet/dist/leaflet.css'
 import ServiceWorkerRegister from './components/ServiceWorkerRegister'
 import InstallButton from './components/InstallButton'
 

@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useRef } from 'react';
+import LocationPicker from './components/LocationPicker';
 
 export default function Home() {
   const [tasks, setTasks] = useState([]);
@@ -402,7 +403,15 @@ export default function Home() {
             + Add
           </button>
         </div>
-        {renderLocationFields()}
+        <LocationPicker
+          locationName={locationName}
+          setLocationName={setLocationName}
+          locationCoords={locationCoords}
+          setLocationCoords={setLocationCoords}
+          locationRadius={locationRadius}
+          setLocationRadius={setLocationRadius}
+          setLocationStatus={setLocationStatus}
+        />
       </div>
 
       {/* Desktop Add Task */}
@@ -428,7 +437,15 @@ export default function Home() {
         <button className="add-btn" onClick={addTask}>ADD</button>
       </div>
       <div className="desktop-location-fields">
-        {renderLocationFields()}
+        <LocationPicker
+          locationName={locationName}
+          setLocationName={setLocationName}
+          locationCoords={locationCoords}
+          setLocationCoords={setLocationCoords}
+          locationRadius={locationRadius}
+          setLocationRadius={setLocationRadius}
+          setLocationStatus={setLocationStatus}
+        />
       </div>
 
       {pendingLocationTasks.length > 0 && (
