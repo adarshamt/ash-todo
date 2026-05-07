@@ -6,11 +6,20 @@ export const dynamic = 'force-dynamic';
 export async function PUT(request, { params }) {
   try {
     const { id } = params;
-    const { completed } = await request.json();
+    const payload = await request.json();
+    const data = {};
+
+    if ('completed' in payload) {
+      data.completed = Boolean(payload.completed);
+    }
+
+    if ('locationAlerted' in payload) {
+      data.locationAlerted = Boolean(payload.locationAlerted);
+    }
     
     const task = await prisma.task.update({
       where: { id },
-      data: { completed },
+      data,
     });
     return NextResponse.json(task);
   } catch (error) {

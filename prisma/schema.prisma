@@ -9,9 +9,14 @@ datasource db {
 }
 
 model Task {
-  id        String   @id @default(uuid())
-  title     String
-  priority  String   // "LOW", "MEDIUM", "HIGH"
-  completed Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id              String   @id @default(uuid())
+  title           String
+  priority        String   // "LOW", "MEDIUM", "HIGH"
+  completed       Boolean  @default(false)
+  locationName    String?
+  locationLat     Float?
+  locationLng     Float?
+  locationRadius  Int      @default(150)
+  locationAlerted Boolean  @default(false)
+  createdAt       DateTime @default(now())
 }

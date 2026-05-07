@@ -190,11 +190,162 @@ body {
   background-color: var(--primary-hover);
 }
 
+.desktop-location-fields {
+  margin-top: -18px;
+  margin-bottom: 24px;
+}
+
+.location-add-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.location-input,
+.radius-select {
+  border: 1px solid var(--border-color);
+  background: var(--task-bg);
+  color: var(--text-main);
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+.location-input {
+  min-width: 0;
+  padding: 9px 12px;
+}
+
+.radius-select {
+  padding: 9px 10px;
+  cursor: pointer;
+}
+
+.pin-location-btn,
+.location-alert-toggle {
+  border: none;
+  border-radius: 8px;
+  background: var(--badge-low-bg);
+  color: var(--text-main);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 12px;
+  white-space: nowrap;
+}
+
+.pin-location-btn:hover,
+.location-alert-toggle:hover {
+  color: white;
+  background: var(--primary);
+}
+
+.pin-location-btn.pinned,
+.location-alert-toggle.watching {
+  color: white;
+  background: var(--primary);
+}
+
+.pin-location-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.location-helper {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.location-alert-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--focus-bg);
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+.location-alert-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.location-alert-copy strong {
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+.location-alert-copy span {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
 .tasks-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-bottom: 40px;
+}
+
+.empty-active-message {
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 16px;
+  text-align: center;
+}
+
+.finished-tasks-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.finished-tasks-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px dashed var(--border-color);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 12px;
+}
+
+.finished-tasks-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.finished-arrow {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+
+.finished-arrow.open {
+  transform: rotate(45deg);
+}
+
+.finished-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .task-item {
@@ -257,14 +408,33 @@ body {
 .task-content {
   flex: 1;
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.task-main-line {
+  display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  width: 100%;
 }
 
 .task-title {
   font-size: 15px;
   color: var(--text-main);
   font-weight: 500;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.task-location {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .task-item.completed .task-title {
@@ -278,6 +448,7 @@ body {
   padding: 4px 8px;
   border-radius: 4px;
   text-transform: uppercase;
+  flex: 0 0 auto;
 }
 
 .badge-HIGH { background-color: var(--badge-high-bg); color: var(--priority-high); }
@@ -342,6 +513,7 @@ body {
   
   .header { display: none; }
   .add-task-container { display: none; }
+  .desktop-location-fields { display: none; }
   .footer-text { display: none; }
   
   .mobile-header {
@@ -435,6 +607,24 @@ body {
     display: flex;
     align-items: center;
     gap: 4px;
+  }
+
+  .mobile-focus-today .location-add-panel {
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 16px;
+  }
+
+  .mobile-focus-today .radius-select {
+    grid-column: 1 / 2;
+    width: 100%;
+  }
+
+  .mobile-focus-today .location-helper {
+    font-size: 11px;
+  }
+
+  .location-alert-bar {
+    margin-bottom: 16px;
   }
   
   .mobile-active-header {
