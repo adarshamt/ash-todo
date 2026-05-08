@@ -13,7 +13,6 @@ export default function Home() {
   const [locationName, setLocationName] = useState('');
   const [locationCoords, setLocationCoords] = useState(null);
   const [locationRadius, setLocationRadius] = useState(150);
-  const [isPinningLocation, setIsPinningLocation] = useState(false);
   const [isWatchingLocation, setIsWatchingLocation] = useState(false);
   const [locationStatus, setLocationStatus] = useState('');
   const alertedLocationIds = useRef(new Set());
@@ -63,32 +62,6 @@ export default function Home() {
         Math.sin(dLng / 2);
 
     return earthRadius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  };
-
-  const pinCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setLocationStatus('Location is not available in this browser.');
-      return;
-    }
-
-    setIsPinningLocation(true);
-    setLocationStatus('Finding your current location...');
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocationCoords({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        setLocationStatus(`Pinned current spot for alerts within ${locationRadius}m.`);
-        setIsPinningLocation(false);
-      },
-      (error) => {
-        setLocationStatus(error.message || 'Could not pin your location.');
-        setIsPinningLocation(false);
-      },
-      { enableHighAccuracy: true, maximumAge: 30000, timeout: 15000 }
-    );
   };
 
   const enableLocationAlerts = async () => {
@@ -264,50 +237,6 @@ export default function Home() {
     t.locationLng != null
   );
   const activeTasksCount = activeTasks.length;
-  const locationHelpText = locationStatus ||
-    (locationCoords
-      ? `Pinned current spot for alerts within ${locationRadius}m.`
-      : 'Add a label and pin here for arrival alerts.');
-
-  const updateLocationRadius = (value) => {
-    const nextRadius = Number(value);
-    setLocationRadius(nextRadius);
-
-    if (locationCoords) {
-      setLocationStatus(`Pinned current spot for alerts within ${nextRadius}m.`);
-    }
-  };
-
-  const renderLocationFields = () => (
-    <div className="location-add-panel">
-      <input
-        type="text"
-        className="location-input"
-        placeholder="Location label (optional)"
-        value={locationName}
-        onChange={(e) => setLocationName(e.target.value)}
-      />
-      <button
-        type="button"
-        className={`pin-location-btn ${locationCoords ? 'pinned' : ''}`}
-        onClick={pinCurrentLocation}
-        disabled={isPinningLocation}
-      >
-        {isPinningLocation ? 'Pinning...' : locationCoords ? 'Pinned here' : 'Pin here'}
-      </button>
-      <select
-        className="radius-select"
-        value={locationRadius}
-        onChange={(e) => updateLocationRadius(e.target.value)}
-      >
-        <option value={75}>75m</option>
-        <option value={150}>150m</option>
-        <option value={300}>300m</option>
-        <option value={500}>500m</option>
-      </select>
-      <div className="location-helper">{locationHelpText}</div>
-    </div>
-  );
 
   const renderTask = (task) => (
     <div key={task.id} className={`task-item priority-${task.priority} ${task.completed ? 'completed' : ''}`}>
@@ -410,6 +339,7 @@ export default function Home() {
           setLocationCoords={setLocationCoords}
           locationRadius={locationRadius}
           setLocationRadius={setLocationRadius}
+          locationStatus={locationStatus}
           setLocationStatus={setLocationStatus}
         />
       </div>
@@ -444,6 +374,7 @@ export default function Home() {
           setLocationCoords={setLocationCoords}
           locationRadius={locationRadius}
           setLocationRadius={setLocationRadius}
+          locationStatus={locationStatus}
           setLocationStatus={setLocationStatus}
         />
       </div>
